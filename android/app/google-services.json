@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "437404116196",
+    "project_id": "reservation-7f6b8",
+    "storage_bucket": "reservation-7f6b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437404116196:android:d31471b1ef62b8e232f8f1",
+        "android_client_info": {
+          "package_name": "com.reservation.reservation_mobil"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437404116196-4qnsg63jogrbiinj0cs74l04h52smq7h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBYDGBSadBQfg685xJUZvUtEmpjSzrUWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437404116196-4qnsg63jogrbiinj0cs74l04h52smq7h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
