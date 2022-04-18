@@ -44,6 +44,9 @@ class PackageInfoApi {
   }
 
 
-
+// stream for live data
+  Stream<List<PackageInfo>>  queryByType(String type) {
+    return packageInfoCollection.where('packageTypeId',isEqualTo: type).snapshots().map(PackageInfo().fromQuery);
+  }
 }
 

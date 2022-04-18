@@ -29,6 +29,7 @@ const Color blackIconColor = Colors.black;
 
 const double buttonHeight = 55;
 
+const String imageHolder = 'https://firebasestorage.googleapis.com/v0/b/reservation-7f6b8.appspot.com/o/holder.jpg?alt=media&token=a87e51f9-ab72-4e69-9112-b54c7bc7da6a';
 List<String> statusList = ['Pending','Finished'];
 
 void showLoadingDialog(BuildContext context) {

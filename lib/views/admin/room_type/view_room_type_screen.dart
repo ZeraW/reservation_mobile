@@ -9,8 +9,6 @@ import '../../../widgets/row/basic/room_row_widget.dart';
 import 'edit_room_type_screen.dart';
 
 class ViewRoomTypeScreen extends StatelessWidget {
-  static const routeName = 'view_city_screen';
-
   final Hotel hotel;
   const ViewRoomTypeScreen({required this.hotel,Key? key}) : super(key: key);
 

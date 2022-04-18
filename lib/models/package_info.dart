@@ -60,4 +60,12 @@ class PackageInfo {
   //to fix the problem of dropdown
   @override
   int get hashCode => super.hashCode;
+
+
+  PackageInfo getPackageInfo(
+      {required List<PackageInfo> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => PackageInfo(id: 'null'));
+  }
 }

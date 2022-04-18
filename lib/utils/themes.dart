@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 ThemeData appTheme() {
   return ThemeData(
+    backgroundColor: Colors.white,
     primarySwatch: Colors.blue,
+    scaffoldBackgroundColor: Colors.white,
+
     appBarTheme: const AppBarTheme(
         centerTitle: false,
         color: Colors.white,

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:reservation_mobile/constants/constants.dart';
 import 'package:reservation_mobile/navigation_service.dart';
+import 'package:reservation_mobile/server/auth.dart';
 import 'package:reservation_mobile/views/admin/hotel/view_hotel_screen.dart';
 import 'package:reservation_mobile/views/admin/package_info/view_package_info_screen.dart';
 import 'package:reservation_mobile/views/admin/package_type/view_package_type_screen.dart';
+import 'package:reservation_mobile/views/admin/reservation/view_res_package_screen.dart';
 import 'package:reservation_mobile/widgets/button/button_widget.dart';
+
 import 'air_line/view_airline_screen.dart';
 import 'city/view_countries.dart';
 import 'country/view_country_screen.dart';
@@ -134,6 +137,7 @@ class AdminScreen extends StatelessWidget {
             getTitle(
               'Reservation',
               fun: () {
+                NavigationService.adminInstance.navigateTo(ViewReservationPackageScreen.routeName);
 
               },
             ),
@@ -150,81 +154,13 @@ class AdminScreen extends StatelessWidget {
           isExpanded: true,
           color: mainRColor,
           fun: () async {
-
+            AuthService().signOut();
           },
         ),
       ],
     );
   }
 
-  Widget getContent(BuildContext context) {
-    return ListView(
-      children: [
-        getTitle('Country', fun: () {
-
-        }),
-        getTitle('City', fun: () {
-
-        }),
-        getTitle('Package Type', fun: () {
-
-        }),
-        getTitle('Package', fun: () {
-
-        }),
-        getTitle('Plan', fun: () {
-
-        }),
-        getTitle('Hotel', fun: () {
-
-        }),
-        getTitle('Room Type', fun: () {
-
-        }),
-        getTitle('Room', fun: () {
-
-        }),
-        getTitle('Airline', fun: () {
-
-        }),
-        getTitle('Flight Type', fun: () {
-
-        }),
-        getTitle('Flight', fun: () {
-
-        }),
-        getTitle('Reservation', fun: () {
-
-        }),
-        getTitle('Children', fun: () {
-
-        }),
-        getTitle('Flight Reservation', fun: () {
-
-        }),
-        getTitle('Hotel Reservation', fun: () {
-
-        }),
-        getTitle('Room Reservation', fun: () {
-
-        }),
-        const SizedBox(
-          height: 20,
-        ),
-        ButtonWidget(
-          const Text(
-            'Log out',
-            style: TextStyle(color: whiteFontColor),
-          ),
-          isExpanded: true,
-          color: mainRColor,
-          fun: () async {
-
-          },
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {

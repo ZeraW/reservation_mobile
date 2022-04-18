@@ -27,5 +27,11 @@ class Airline {
     }).toList();
   }
 
+  Airline getAirline(
+      {required List<Airline> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => Airline(id: 'null',name: 'Removed'));
+  }
 
 }

@@ -38,4 +38,10 @@ class Room {
     }).toList();
   }
 
+  Room getRoom(
+      {required List<Room> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => Room(id: 'null',name: 'Removed'));
+  }
 }

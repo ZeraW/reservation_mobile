@@ -29,4 +29,11 @@ class FlightType {
     }).toList();
   }
 
+  FlightType getFlightType(
+      {required List<FlightType> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => FlightType(id: 'null',name: 'Removed'));
+  }
+
 }

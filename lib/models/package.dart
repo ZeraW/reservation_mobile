@@ -48,6 +48,11 @@ class Package {
     }).toList();
   }
 
-
+  Package getPackage(
+      {required List<Package> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => Package(id: 'null'));
+  }
 
 }

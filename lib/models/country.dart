@@ -32,4 +32,13 @@ class Country {
 
   @override
   int get hashCode => super.hashCode;
+
+
+
+  String getCountryName({required List<Country> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => Country(id: 'null', name: 'Removed'))
+        .name!;
+  }
 }

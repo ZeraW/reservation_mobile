@@ -25,7 +25,7 @@ class PackageRowWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Package: ${packageInfo!.name!}\n',
+                  'Package: ${packageInfo!.name!}',
                   style: const TextStyle(
                       fontSize: fontSize15,
                       fontWeight: fontWeight400,
@@ -36,7 +36,7 @@ class PackageRowWidget extends StatelessWidget {
 
               Expanded(
                 child: Text(
-                  'id: ${package!.id!}\n',
+                  'id:${package!.id!}',maxLines: 1,overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                       fontSize: fontSize15,
                       fontWeight: fontWeight400,
@@ -47,30 +47,32 @@ class PackageRowWidget extends StatelessWidget {
               const SizedBox(width: 8,)
             ],
           ),
-          const SizedBox(height: 5,),
+          const SizedBox(height: 15,),
 
           Row(
             children: [
-              Text(
-                'Depart: ${DateFormat('M/d/yyyy').format(package!.departAt!)}\n\n'
-                    'Return: ${DateFormat('M/d/yyyy').format(package!.returnAt!)}',
-                style: const TextStyle(
-                    fontSize: fontSize15,
-                    fontWeight: fontWeight400,
-                    color: blackFontColor
+              Expanded(
+                child: Text(
+                  'Depart: ${DateFormat('M/d/yyyy').format(package!.departAt!)}\n\n'
+                      'Return: ${DateFormat('M/d/yyyy').format(package!.returnAt!)}',
+                  style: const TextStyle(
+                      fontSize: fontSize15,
+                      fontWeight: fontWeight400,
+                      color: blackFontColor
+                  ),
                 ),
               ),
-              const Spacer(),
-              Text(
-                'Capacity: ${package!.capacity!}\n\n'
-                    'Remaining: ${package!.remaining!}',
-                style: const TextStyle(
-                    fontSize: fontSize15,
-                    fontWeight: fontWeight400,
-                    color: blackFontColor
+              Expanded(
+                child: Text(
+                  'Capacity: ${package!.capacity!}\n\n'
+                      'Remaining: ${package!.remaining!}',
+                  style: const TextStyle(
+                      fontSize: fontSize15,
+                      fontWeight: fontWeight400,
+                      color: blackFontColor
+                  ),
                 ),
               ),
-              const Spacer(),
             ],
           ),
          const SizedBox(height: 5,),

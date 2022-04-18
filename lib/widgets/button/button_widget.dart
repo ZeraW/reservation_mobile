@@ -23,7 +23,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(
-              10.0,
+              8.0,
             ),
           ),
         ),
@@ -36,7 +36,7 @@ class _ButtonWidgetState extends State<ButtonWidget> {
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
             Radius.circular(
-              10.0,
+              8.0,
             ),
           ),
           color: (widget.color ?? mainBColor),

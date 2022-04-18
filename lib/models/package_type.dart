@@ -34,5 +34,11 @@ class PackageType {
   @override
   int get hashCode => super.hashCode;
 
-
+  String getPackageTypeName(
+      {required List<PackageType> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => PackageType(id: 'null', name: 'Removed'))
+        .name!;
+  }
 }

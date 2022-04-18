@@ -83,14 +83,14 @@ class _EditPackageScreenState extends State<EditPackageScreen> {
   void createSearchKeywordsList() {
     keyWords.clear();
     keyWords['pInfo'] = selectedPInfo!.id;
+    keyWords['pType'] = selectedPInfo!.packageTypeId;
     keyWords['name'] = selectedPInfo!.name;
     keyWords['city'] = selectedPInfo!.destinationCityId;
     keyWords['country'] = selectedPInfo!.destinationCountryId;
     keyWords['price'] = selectedPInfo!.price;
     keyWords['days'] = selectedPInfo!.daysNum;
-    keyWords['departAt'] = departAt;
-    keyWords['returnAt'] = returnAt;
-    keyWords['returnAt'] = returnAt;
+    keyWords['departAt'] = departAt!.millisecondsSinceEpoch;
+    keyWords['returnAt'] = returnAt!.millisecondsSinceEpoch;
 
     debugPrint(keyWords.toString());
   }
@@ -110,11 +110,15 @@ class _EditPackageScreenState extends State<EditPackageScreen> {
       departAt = widget.edit!.departAt;
       returnAt = widget.edit!.returnAt;
       remaining = widget.edit!.remaining!;
+      departAtTEC.text = 'lololo';
+
+      print('yohooo');
     }
   }
 
   @override
   Widget build(BuildContext context) {
+
     List<PackageInfo>? listPInfo = context.watch<List<PackageInfo>?>();
 
     if (listPInfo != null && selectedPInfo == null && widget.edit != null) {
@@ -192,6 +196,7 @@ class _EditPackageScreenState extends State<EditPackageScreen> {
                     DateTimePickerBuilder(
                       hint: "Depart At",
                       controller: departAtTEC,
+                      initialValue: departAt,
                       onChange: (date) {
                         setState(() {
                           departAt = date;
@@ -200,17 +205,9 @@ class _EditPackageScreenState extends State<EditPackageScreen> {
                             returnAtTEC.text = DateFormat('M/d/yyyy hh:mm:ss').format(returnAt!);
 
                           }
-
-                          setState(() {
-
-                          });
-
                         });
                       },
                       validator: (value) {
-                        if (returnAt != null && value!.isAfter(returnAt!)) {
-                          return "depart at can't be after return at";
-                        }
                         return null;
                       },
                     ),
@@ -219,13 +216,10 @@ class _EditPackageScreenState extends State<EditPackageScreen> {
                     ),
                     DateTimePickerBuilder(
                       hint: "Return At",
+                      initialValue: returnAt,
                       controller: returnAtTEC,
-                      currentDate: returnAt,
                       enabled: false,
                       validator: (value) {
-                        if (departAt != null && value!.isBefore(departAt!)) {
-                          return "return at can't be before depart at";
-                        }
                         return null;
                       },
                     ),

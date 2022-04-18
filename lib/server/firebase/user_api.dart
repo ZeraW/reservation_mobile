@@ -24,12 +24,11 @@ class UserApi {
         .map((event) => UserModel.fromJson(event.data()));
   }
 
-/*Stream<List<UserModel>> getLiveUsers(String id) {
+Stream<List<UserModel>> get getLiveUsers {
   return userCollection
-      .where('restaurantId', isEqualTo: id)
       .snapshots()
       .map(UserModel().fromQuery);
-}*/
+}
 
 //upload Image method
   Future uploadImageToStorage({required File file, String? id}) async {

@@ -2,14 +2,15 @@ import 'package:flutter/widgets.dart';
 import 'package:reservation_mobile/views/admin/admin_screen.dart';
 import 'package:reservation_mobile/views/admin/air_line/view_airline_screen.dart';
 import 'package:reservation_mobile/views/admin/city/view_countries.dart';
-import 'package:reservation_mobile/views/admin/country/edit_country_screen.dart';
 import 'package:reservation_mobile/views/admin/country/view_country_screen.dart';
 import 'package:reservation_mobile/views/admin/flight_type/view_flight_type_screen.dart';
 import 'package:reservation_mobile/views/admin/hotel/view_hotel_screen.dart';
 import 'package:reservation_mobile/views/admin/package/view_package_screen.dart';
 import 'package:reservation_mobile/views/admin/package_info/view_package_info_screen.dart';
 import 'package:reservation_mobile/views/admin/package_type/view_package_type_screen.dart';
+import 'package:reservation_mobile/views/admin/reservation/view_res_package_screen.dart';
 import 'package:reservation_mobile/views/splash.dart';
+import 'package:reservation_mobile/views/user/user_screen.dart';
 import 'package:reservation_mobile/wrapper.dart';
 
 import 'views/admin/city/view_city_screen.dart';
@@ -31,7 +32,8 @@ final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
   ViewPackageTypeScreen.routeName :  (BuildContext context) => const ViewPackageTypeScreen(),
   ViewPackageInfoScreen.routeName :  (BuildContext context) => const ViewPackageInfoScreen(),
   ViewPackageScreen.routeName :  (BuildContext context) => const ViewPackageScreen(),
-
+  UserScreen.routeName :  (BuildContext context) => const UserScreen(),
+  ViewReservationPackageScreen.routeName :  (BuildContext context) => const ViewReservationPackageScreen(),
 
 
 

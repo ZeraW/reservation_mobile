@@ -5,6 +5,7 @@ class NavigationService {
 
   static NavigationService instance = NavigationService();
  static NavigationService adminInstance = NavigationService();
+ static NavigationService userInstance = NavigationService();
 
 
 
@@ -42,7 +43,7 @@ class NavigationService {
       return true;
     });
     if (!isNewRouteSameAsCurrent) {
-      key.currentState!.pushReplacementNamed(newRouteName);
+      key.currentState!.pushNamedAndRemoveUntil(newRouteName, (Route<dynamic> route) => false);
     }
   }
 }

@@ -36,4 +36,11 @@ class City {
     this.name,
     this.countryId,
   });
+
+  String getCityName({required List<City> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => City(id: 'null', name: 'Removed'))
+        .name!;
+  }
 }

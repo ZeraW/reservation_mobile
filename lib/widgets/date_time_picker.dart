@@ -7,7 +7,8 @@ import '../utils/dimensions.dart';
 class DateTimePickerBuilder extends StatefulWidget {
   final String hint;
   final bool? enabled;
-  final DateTime? currentDate;
+  final DateTime? currentDate,initialValue,firstDate;
+  final InputType inputType;
 
   final TextEditingController controller;
   final Color? activeBorderColor;
@@ -17,10 +18,11 @@ class DateTimePickerBuilder extends StatefulWidget {
   final FormFieldValidator<DateTime>? validator;
   const DateTimePickerBuilder(
       {required this.hint,
-        required this.controller,
+        required this.controller,this.initialValue,
         this.focusNode,this.currentDate,
         this.validator,
-        this.onChange,
+        this.inputType = InputType.both,
+        this.onChange,this.firstDate,
         this.enabled =true,
       this.activeBorderColor,Key? key}) : super(key: key);
 
@@ -32,14 +34,17 @@ class _DateTimePickerBuilderState extends State<DateTimePickerBuilder> {
   Widget build(BuildContext context) {
     return FormBuilderDateTimePicker(
       name: widget.hint,
-        initialValue: DateTime.now(),
+        initialValue: widget.initialValue??DateTime.now(),
+      initialDate: DateTime.now(),
       enabled: widget.enabled!,
+
       controller: widget.controller,
       focusNode: widget.focusNode,
       onChanged: widget.onChange,
+      inputType:widget.inputType,
       maxLines: 1,
       alwaysUse24HourFormat: false,
-        firstDate: DateTime.now(),
+        firstDate: widget.firstDate,
         lastDate: DateTime(2024),
       currentDate: widget.currentDate,
       validator: widget.validator,

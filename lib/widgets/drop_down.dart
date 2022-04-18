@@ -69,7 +69,7 @@ class DropDownBuilder extends StatelessWidget {
         style: const TextStyle(color: Colors.black87),
       ),
       validator: (value) {
-        if (value == null) {
+        if (errorText.isNotEmpty && value == null) {
           return "× $errorText";
         }
         return null;

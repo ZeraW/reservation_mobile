@@ -43,4 +43,12 @@ class Hotel {
           rate: doc.get('rate').toDouble());
     }).toList();
   }
+
+
+  Hotel getHotel(
+      {required List<Hotel> list, required String id}) {
+    return list
+        .firstWhere((element) => element.id == id,
+        orElse: () => Hotel(id: 'null',name: 'Removed'));
+  }
 }

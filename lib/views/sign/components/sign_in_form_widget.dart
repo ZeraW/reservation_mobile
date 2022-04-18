@@ -63,6 +63,7 @@ class SignInFormWidget extends StatelessWidget {
             TextFormBuilder(
               hint: "Password",
               controller: passwordTEC,
+              isPassword: true,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Enter password";
