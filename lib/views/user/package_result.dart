@@ -65,7 +65,7 @@ class ResultList extends StatelessWidget {
                                 userId:FirebaseAuth.instance.currentUser?.uid,
                                 packageId: pList[index].id,
                                 canceled: false
-                            )),
+                            ),pList[index].keyWords!['country'],pList[index].keyWords!['city']),
                         child: const ReservationScreen()));
               },
               title: Text('${pList[index].keyWords!['name']}'),

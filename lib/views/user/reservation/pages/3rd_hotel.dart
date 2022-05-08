@@ -24,7 +24,7 @@ class ResHotel extends StatelessWidget {
               child: ListView.builder(
                   itemBuilder: (context, index) {
                     Hotel hotel = hotelList[index];
-                    return Column(
+                    return hotel.countryId == provider.country && hotel.cityId == provider.city ?Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -108,7 +108,7 @@ class ResHotel extends StatelessWidget {
                           height: 10,
                         ),
                       ],
-                    );
+                    ):const SizedBox();
                   },
                   itemCount: hotelList.length,
                 ),

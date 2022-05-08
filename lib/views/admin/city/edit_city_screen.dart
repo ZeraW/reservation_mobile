@@ -35,7 +35,7 @@ class _EditCityScreenState extends State<EditCityScreen> {
         });
       } else {
         await CityApi()
-            .updateData(update: City(id: widget.edit?.id, name: name))
+            .updateData(update: City(id: widget.edit?.id,countryId: widget.countryId, name: name))
             .then((value) {
           NavigationService.adminInstance.goBack();
         });

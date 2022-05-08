@@ -19,10 +19,12 @@ import '../views/user/reservation/pages/6th_flight_type.dart';
 class ReservationManage extends ChangeNotifier {
   int pageState = 1;
   int maxCount = 0;
+  String country;
+  String city;
 
   Reservation reservation = Reservation();
   Package package = Package();
-  ReservationManage(this.reservation);
+  ReservationManage(this.reservation,this.country,this.city);
 
   void updateMaxCount(int data) {
     maxCount = data;
