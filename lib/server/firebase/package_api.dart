@@ -68,6 +68,16 @@ class PackageApi {
   }
 
   // stream for live data
+  Stream<List<Package>> getAllPackagesByPackageInfo({
+    String? pInfo,
+  }) {
+    return packageCollection
+        .where('packetInfoId', isEqualTo: pInfo)
+        .snapshots()
+        .map(Package().fromQuery);
+  }
+
+  // stream for live data
   Stream<List<Package>> getPackagesByDate({required bool isUpcoming,}) {
     return isUpcoming ? packageCollection
         .where('keyWords.departAt', isGreaterThanOrEqualTo: DateTime(DateTime.now().year,

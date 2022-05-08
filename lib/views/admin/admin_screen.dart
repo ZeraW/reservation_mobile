@@ -12,6 +12,7 @@ import 'air_line/view_airline_screen.dart';
 import 'city/view_countries.dart';
 import 'country/view_country_screen.dart';
 import 'flight_type/view_flight_type_screen.dart';
+import 'package/view_package_info_screen_for_package.dart';
 import 'package/view_package_screen.dart';
 import 'room_type/select_hotel.dart';
 
@@ -87,7 +88,7 @@ class AdminScreen extends StatelessWidget {
             getTitle(
               'Package',
               fun: () {
-                NavigationService.adminInstance.navigateTo(ViewPackageScreen.routeName);
+                NavigationService.adminInstance.navigateTo(ViewPackageInfo4PackageScreen.routeName);
 
               },
             )

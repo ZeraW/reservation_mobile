@@ -14,6 +14,7 @@ import 'package:reservation_mobile/views/user/user_screen.dart';
 import 'package:reservation_mobile/wrapper.dart';
 
 import 'views/admin/city/view_city_screen.dart';
+import 'views/admin/package/view_package_info_screen_for_package.dart';
 import 'views/admin/room_type/select_hotel.dart';
 
 
@@ -35,6 +36,7 @@ final Map<String, WidgetBuilder> routes = <String, WidgetBuilder>{
   UserScreen.routeName :  (BuildContext context) => const UserScreen(),
   ViewReservationPackageScreen.routeName :  (BuildContext context) => const ViewReservationPackageScreen(),
 
+  ViewPackageInfo4PackageScreen.routeName :  (BuildContext context) => const ViewPackageInfo4PackageScreen(),
 
 
 
