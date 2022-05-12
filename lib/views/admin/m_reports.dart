@@ -258,7 +258,8 @@ class ManagementReportScreen extends StatelessWidget {
 
   String getPackage1st(int rank, List<Package> mPackageList, List<PackageInfo> pInfoList,ReportModel report) {
     return report.topCountSecond!.length < rank + 1 ? ''
-        : pInfoList.firstWhere((element) => element.id == mPackageList.firstWhere((element) => element.id == report.topCountFirst!.keys.elementAt(rank)).packetInfoId!,orElse: ()=>PackageInfo(name: 'removed')).name!;
+        : pInfoList.firstWhere((element) => element.id == mPackageList.firstWhere((element) =>
+    element.id == report.topCountFirst!.keys.elementAt(rank),orElse: ()=>Package(id: 'n',packetInfoId: 'n')).packetInfoId!,orElse: ()=>PackageInfo(name: 'removed')).name!;
   }
 
 
@@ -266,7 +267,8 @@ class ManagementReportScreen extends StatelessWidget {
   String getPackage2nd(int rank, List<Package> mPackageList,List<PackageInfo> pInfoList,
       ReportModel report) {
     return report.topCountSecond!.length < rank + 1 ? ''
-        : pInfoList.firstWhere((element) => element.id == mPackageList.firstWhere((element) => element.id == report.topCountSecond!.keys.elementAt(rank)).packetInfoId!,orElse: ()=>PackageInfo(name: 'removed')).name!;
+        : pInfoList.firstWhere((element) => element.id == mPackageList.firstWhere((element) =>
+    element.id == report.topCountSecond!.keys.elementAt(rank),orElse: ()=>Package(id: 'n',packetInfoId: 'n')).packetInfoId!,orElse: ()=>PackageInfo(name: 'removed')).name!;
   }
 
 

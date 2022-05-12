@@ -42,7 +42,7 @@ Future updateBookingStats(Reservation reservation) async {
           'totalCount.2nd': FieldValue.increment(1),
           'totalCount.$month': FieldValue.increment(1),
 
-          'topProfitSecond.${reservation.totalPrice!.toInt()}':
+          'topProfitSecond.${reservation.packageId}':
           FieldValue.increment(reservation.totalPrice!.toInt()),
           'topCountSecond.${reservation.packageId}': FieldValue.increment(1)
         });
