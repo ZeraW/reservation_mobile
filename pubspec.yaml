@@ -45,7 +45,8 @@ dependencies:
   fluttertoast: ^8.0.9
   flutter_form_builder: ^7.0.0
   flutter_datetime_picker: ^1.5.1
-
+  permission_handler: ^9.2.0
+  flutter_credit_card: ^3.0.1
 
 dev_dependencies:
   flutter_test:

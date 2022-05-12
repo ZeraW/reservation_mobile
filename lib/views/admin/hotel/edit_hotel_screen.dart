@@ -145,8 +145,6 @@ class _EditHotelScreenState extends State<EditHotelScreen> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Enter a valid name";
-                        } else if (!value.contains(RegExp('^[a-zA-Z]+\$'))) {
-                          return "Use only letters from a-z";
                         }
                         return null;
                       },

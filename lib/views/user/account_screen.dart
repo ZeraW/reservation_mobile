@@ -50,6 +50,11 @@ class _AccountScreenState extends State<AccountScreen> {
         padding: const EdgeInsets.all(30),
         child: ListView(
           children: [
+
+            const  CircleAvatar(radius: 45,backgroundColor: Colors.black,child:  Icon(Icons.person,color: Colors.white,size: 60,)),
+            const SizedBox(
+              height: 30,
+            ),
             TextFormBuilder(
               hint: "Name",
               controller: nameTEC,

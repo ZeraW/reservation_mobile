@@ -19,6 +19,8 @@ import '../views/user/reservation/pages/6th_flight_type.dart';
 class ReservationManage extends ChangeNotifier {
   int pageState = 1;
   int maxCount = 0;
+  int daysCount = 0;
+
   String country;
   String city;
 
@@ -28,6 +30,10 @@ class ReservationManage extends ChangeNotifier {
 
   void updateMaxCount(int data) {
     maxCount = data;
+    notifyListeners();
+  }
+  void updateDays(int data) {
+    daysCount = data;
     notifyListeners();
   }
 
@@ -92,8 +98,10 @@ class ReservationManage extends ChangeNotifier {
     reservation.hotelPrice = 0;
     //loop inside the rooms map and get the new price
     for (int num in reservation.roomsAndCount!.values) {
-      reservation.hotelPrice = reservation.hotelPrice! + (num * price);
+      reservation.hotelPrice = reservation.hotelPrice! + (num * price) ;
     }
+    reservation.hotelPrice = reservation.hotelPrice! * daysCount;
+
     notifyListeners();
   }
 

@@ -15,6 +15,11 @@ import 'package:reservation_mobile/models/hotel.dart';
 import 'package:reservation_mobile/models/package_info.dart';
 import 'package:reservation_mobile/models/room.dart';
 import 'package:reservation_mobile/provider/reservation_provider.dart';
+import 'package:reservation_mobile/widgets/widget_to_png.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'dart:io';
+
+import '../../models/user.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({Key? key}) : super(key: key);
@@ -28,10 +33,8 @@ class _BookingScreenState extends State<BookingScreen> {
   Color cardColor = Colors.grey.withOpacity(0.50);
   Color textColor = Colors.black.withOpacity(0.60);
 
-
   @override
   Widget build(BuildContext context) {
-
     return Padding(
         padding: const EdgeInsets.only(top: 30, right: 30, left: 30),
         child: Column(
@@ -88,30 +91,37 @@ class _BookingScreenState extends State<BookingScreen> {
             ),
             Expanded(
               child: StreamBuilder<List<Reservation>>(
-                stream: ReservationApi().query(user: FirebaseAuth.instance.currentUser!.uid),
-                builder: (context, snapshot) {
-                  List<Reservation>? myData = snapshot.data;
+                  stream: ReservationApi()
+                      .query(user: FirebaseAuth.instance.currentUser!.uid),
+                  builder: (context, snapshot) {
+                    List<Reservation>? myData = snapshot.data;
 
-
-                  return myData!=null ?ListView.builder(itemBuilder: (context, index) {
-
-                    Reservation res = myData[index];
-                    bool isNew = res.departAt! >= dateToInt(DateTime.now());
-                    bool isOld = res.departAt! < dateToInt(DateTime.now());
-                    bool show = isUpcoming ? isNew : isOld;
-                    return  show?BookingCard(data: myData[index],):const SizedBox();
-                  },itemCount: myData.length,):const SizedBox();
-                }
-              ),
+                    return myData != null
+                        ? ListView.builder(
+                            itemBuilder: (context, index) {
+                              Reservation res = myData[index];
+                              bool isNew =
+                                  res.departAt! >= dateToInt(DateTime.now());
+                              bool isOld =
+                                  res.departAt! < dateToInt(DateTime.now());
+                              bool show = isUpcoming ? isNew : isOld;
+                              return show
+                                  ? BookingCard(
+                                      data: myData[index],
+                                    )
+                                  : const SizedBox();
+                            },
+                            itemCount: myData.length,
+                          )
+                        : const SizedBox();
+                  }),
             )
           ],
         ));
   }
 
-
-  int dateToInt(DateTime i){
-
-    return DateTime(i.year,i.month,i.day).millisecondsSinceEpoch;
+  int dateToInt(DateTime i) {
+    return DateTime(i.year, i.month, i.day).millisecondsSinceEpoch;
   }
 }
 
@@ -119,8 +129,8 @@ class BookingCard extends StatelessWidget {
   final Color cardColor = Colors.grey.withOpacity(0.50);
   final Color textColor = Colors.black.withOpacity(0.60);
   final Reservation data;
-  BookingCard({required this.data,Key? key}) : super(key: key);
 
+  BookingCard({required this.data, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +140,7 @@ class BookingCard extends StatelessWidget {
         Container(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
             decoration: BoxDecoration(
-                color: cardColor,
-                borderRadius: BorderRadius.circular(8)),
+                color: cardColor, borderRadius: BorderRadius.circular(8)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -173,7 +182,8 @@ class BookingCard extends StatelessWidget {
             const Text('View Details', style: TextStyle(fontSize: 17)),
             isExpanded: true,
             fun: () {
-              NavigationService.userInstance.navigateToWidget(ResSummary(reservation: data));
+              NavigationService.userInstance
+                  .navigateToWidget(ResSummary(reservation: data));
             },
             color: xColors.mainColor,
           ),
@@ -186,10 +196,11 @@ class BookingCard extends StatelessWidget {
   }
 }
 
-
 class ResSummary extends StatelessWidget {
   final Reservation reservation;
-  const ResSummary({required this.reservation,Key? key}) : super(key: key);
+  late GlobalKey key1;
+
+  ResSummary({required this.reservation, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -201,229 +212,269 @@ class ResSummary extends StatelessWidget {
     List<Hotel>? hotelList = context.watch<List<Hotel>?>();
     List<Airline>? airLineList = context.watch<List<Airline>?>();
     List<FlightType>? flightTypeList = context.watch<List<FlightType>?>();
+    List<UserModel>? usersList = context.watch<List<UserModel>?>();
 
     Package? package = pList != null
         ? Package().getPackage(list: pList, id: reservation.packageId!)
         : null;
     PackageInfo? packageInfo = package != null && pInfoList != null
         ? PackageInfo()
-        .getPackageInfo(list: pInfoList, id: package.packetInfoId!)
+            .getPackageInfo(list: pInfoList, id: package.packetInfoId!)
         : null;
     Hotel? hotel = hotelList != null
         ? Hotel().getHotel(list: hotelList, id: reservation.hotelId!)
         : null;
     Airline? airline = airLineList != null
-        ? Airline()
-        .getAirline(list: airLineList, id: reservation.airLineId!)
+        ? Airline().getAirline(list: airLineList, id: reservation.airLineId!)
         : null;
     FlightType? flightType = flightTypeList != null
-        ? FlightType().getFlightType(
-        list: flightTypeList, id: reservation.flightTypeId!)
+        ? FlightType()
+            .getFlightType(list: flightTypeList, id: reservation.flightTypeId!)
         : null;
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: package != null &&
-          packageInfo != null &&
-          countryList != null &&
-          airline != null &&
-          flightType != null &&
-          cityList != null &&
-          roomList != null &&
-          hotel != null
-          ? Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-        child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text(
-                      'Package Information',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 17),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        color: Colors.black.withOpacity(0.05),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Start Date: ${package.departAt}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('End Date:  ${package.returnAt}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('Country:  ${Country().getCountryName(list: countryList, id: packageInfo.destinationCountryId!)}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('City: ${City().getCityName(list: cityList, id: packageInfo.destinationCityId!)}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('No. of Days: ${packageInfo.daysNum}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Hotel & Room Info.',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 17),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        color: Colors.black.withOpacity(0.05),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
 
-                            Text('Hotel: ${hotel.name}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('Room: ${getRooms(roomList,reservation.roomsAndCount!)}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('Price: ${reservation.hotelPrice}'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Flight Info.',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 17),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        color: Colors.black.withOpacity(0.05),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Travelers no. : ${reservation.capacity}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('Airline: ${airline.name}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('Flight Type: ${flightType.name}'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text('Price: ${reservation.flightPrice}'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      'Total Cost',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 17),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Container(
-                        color: Colors.black.withOpacity(0.05),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                'Package Price: ${reservation.packagePrice} L.E'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                                'Flight Price: ${reservation.flightPrice} L.E'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                                'Hotel Price: ${reservation.hotelPrice} L.E'),
-                            const Divider(
-                              color: Colors.black,
-                            ),
-                            Text(
-                                'Total Price: ${reservation.totalPrice} L.E'),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            /*ButtonWidget(
-            const Text(
-              'Continue',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            isExpanded: true,
-            color: xColors.mainColor,
-            fun: () {
-              provider.goTo(8);
-            },
-        ),*/
+
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () async {
+            await Utils.print(key: key1, context: context, id: '${reservation.id}');
+          }, icon: const Icon(Icons.print))
         ],
       ),
-          )
+      body: package != null &&
+              packageInfo != null &&
+              countryList != null &&
+              airline != null &&
+              flightType != null &&
+              cityList != null &&
+              roomList != null &&
+              hotel != null && usersList != null
+          ? WidgetToImage(builder: (key) {
+            key1 = key;
+            return Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Text(
+                            'Reservation Info.',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.05),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('User: ${UserModel().getUserName(list: usersList, id: reservation.userId!)}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      'Booking ID: ${reservation.id}'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'Package Information',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.05),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Start Date: ${package.departAt}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text('End Date:  ${package.returnAt}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      'Country:  ${Country().getCountryName(list: countryList, id: packageInfo.destinationCountryId!)}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      'City: ${City().getCityName(list: cityList, id: packageInfo.destinationCityId!)}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text('No. of Days: ${packageInfo.daysNum}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'Hotel & Room Info.',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.05),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Hotel: ${hotel.name}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      'Room: ${getRooms(roomList, reservation.roomsAndCount!)}'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'Flight Info.',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.05),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      'Travelers no. : ${reservation.capacity}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text('Airline: ${airline.name}'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text('Flight Type: ${flightType.name}'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          const Text(
+                            'Total Cost',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.05),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      'Package Price: ${reservation.packagePrice} L.E'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      'Flight Price: ${reservation.flightPrice} L.E'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                      'Hotel Price: ${reservation.hotelPrice} L.E'),
+                                  const Divider(
+                                    color: Colors.black,
+                                  ),
+                                  Text(
+                                      'Total Price: ${reservation.totalPrice} L.E'),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  /*ButtonWidget(
+              const Text(
+                'Continue',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              isExpanded: true,
+              color: xColors.mainColor,
+              fun: () {
+                provider.goTo(8);
+              },
+            ),*/
+                ],
+              ),
+            );
+          })
           : const SizedBox(),
     );
   }
 
-
-  String getRooms(List<Room> rooms,Map<String , int > roomsAndCount){
+  String getRooms(List<Room> rooms, Map<String, int> roomsAndCount) {
     String roomie = '';
-    for(var ro in roomsAndCount.entries){
-      roomie = roomie + ro.value.toString()+"x "+Room().getRoom(list: rooms, id: ro.key).name!+" , ";
+    for (var ro in roomsAndCount.entries) {
+      roomie = roomie +
+          ro.value.toString() +
+          "x " +
+          Room().getRoom(list: rooms, id: ro.key).name! +
+          " , ";
     }
     return roomie;
   }

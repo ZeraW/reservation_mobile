@@ -163,6 +163,7 @@ class ResInfo extends StatelessWidget {
                     if(package.remaining!>0){
                       provider.updateMaxCount(package.remaining!);
                       provider.updateDate(package.departAt!.millisecondsSinceEpoch,package.returnAt!.millisecondsSinceEpoch);
+                      provider.updateDays(packageInfo.daysNum!);
                       provider.goTo(2);
                     }
                   },

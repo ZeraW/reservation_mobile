@@ -27,7 +27,7 @@ class _UserScreenState extends State<UserScreen> {
       {'Safrat':const HomeScreen()},
       {'Search':const SearchScreen()},
       {'Booking':const BookingScreen(),},
-      {'Account': AccountScreen(),},
+      {'Account': const AccountScreen(),},
     ];
     return Scaffold(
         appBar: AppBar(

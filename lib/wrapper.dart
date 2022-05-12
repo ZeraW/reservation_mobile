@@ -8,6 +8,7 @@ import 'package:reservation_mobile/models/flight_type.dart';
 import 'package:reservation_mobile/models/hotel.dart';
 import 'package:reservation_mobile/models/package_info.dart';
 import 'package:reservation_mobile/models/package_type.dart';
+import 'package:reservation_mobile/models/report.dart';
 import 'package:reservation_mobile/models/room.dart';
 import 'package:reservation_mobile/routes.dart';
 import 'package:reservation_mobile/server/auth.dart';
@@ -19,6 +20,7 @@ import 'package:reservation_mobile/server/firebase/hotel_api.dart';
 import 'package:reservation_mobile/server/firebase/package_api.dart';
 import 'package:reservation_mobile/server/firebase/package_info_api.dart';
 import 'package:reservation_mobile/server/firebase/package_type_api.dart';
+import 'package:reservation_mobile/server/firebase/report_api.dart';
 import 'package:reservation_mobile/server/firebase/room_api.dart';
 import 'package:reservation_mobile/server/firebase/user_api.dart';
 import 'package:reservation_mobile/utils/themes.dart';
@@ -54,6 +56,9 @@ class _WrapperState extends State<Wrapper> {
               return MultiProvider(providers: [
                 StreamProvider<List<Country>?>.value(
                     value: CountryApi().getLiveData, initialData: null,),
+                StreamProvider<List<ReportModel>?>.value(
+                  value: ReportApi().getLiveReports, initialData: null,),
+
                 StreamProvider<List<UserModel>?>.value(
                   value: UserApi().getLiveUsers, initialData: null,),
                 StreamProvider<List<City>?>.value(
@@ -85,6 +90,8 @@ class _WrapperState extends State<Wrapper> {
               return MultiProvider(providers: [
                 StreamProvider<List<Country>?>.value(
                   value: CountryApi().getLiveData, initialData: null,),
+                StreamProvider<List<UserModel>?>.value(
+                  value: UserApi().getLiveUsers, initialData: null,),
                 StreamProvider<UserModel?>.value(
                   value: UserApi().getCurrentUser, initialData: null,),
                 StreamProvider<List<City>?>.value(

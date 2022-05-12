@@ -85,9 +85,7 @@ class _EditCountryScreenState extends State<EditCountryScreen> {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Enter a valid name";
-                        } else if (!value.contains(RegExp('^[a-zA-Z]+\$'))) {
-                          return "Use only letters from a-z";
-                        } else if (((widget.all!.firstWhere(
+                        }  else if (((widget.all!.firstWhere(
                                     (it) =>
                                         it.name!.toLowerCase() ==
                                         value.toLowerCase(),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reservation_mobile/models/reservation.dart';
+import 'package:reservation_mobile/server/firebase/report_api.dart';
 
 
 class ReservationApi {
@@ -12,7 +13,9 @@ class ReservationApi {
   Future addData({required Reservation add}) async {
     var ref = reservationCollection.doc();
     add.id = ref.id;
-    return await ref.set(add.toJson());
+    return await ref.set(add.toJson()).then((value) async{
+      await  ReportApi().updateBookingStats(add);
+    });
   }
 
   //update existing data

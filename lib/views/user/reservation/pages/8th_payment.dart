@@ -15,12 +15,27 @@ import 'package:reservation_mobile/server/firebase/reservation_api.dart';
 import 'package:reservation_mobile/utils/colors.dart';
 import 'package:reservation_mobile/widgets/button/button_widget.dart';
 import 'package:reservation_mobile/widgets/textfield_widget.dart';
+import 'package:flutter_credit_card/flutter_credit_card.dart';
 
-class ResPayment extends StatelessWidget {
+class ResPayment extends StatefulWidget {
   ResPayment({Key? key}) : super(key: key);
+
+  @override
+  State<ResPayment> createState() => _ResPaymentState();
+}
+
+class _ResPaymentState extends State<ResPayment> {
   final GlobalKey<FormBuilderState> formKey = GlobalKey<FormBuilderState>();
+
   final TextEditingController nameTEC = TextEditingController();
+    String name = '';
+   String card = '';
+   String date = '';
+  String ccv = '';
+
   final TextEditingController cardTEC = TextEditingController();
+  final TextEditingController ccvTEC = TextEditingController();
+
   final TextEditingController dateTEC = TextEditingController();
 
   @override
@@ -36,45 +51,12 @@ class ResPayment extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Total Cost',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      color: Colors.black.withOpacity(0.05),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              'Package Price: ${provider.reservation.packagePrice} L.E'),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                              'Flight Price: ${provider.reservation.flightPrice} L.E'),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                              'Hotel Price: ${provider.reservation.hotelPrice} L.E'),
-                          const Divider(
-                            color: Colors.black,
-                          ),
-                          Text(
-                              'Total Price: ${provider.reservation.totalPrice} L.E'),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                        ],
-                      ),
-                    ),
+                  CreditCardWidget(
+                    cardNumber: card,
+                    expiryDate: date,
+                    cardHolderName: name,
+                    cvvCode: ccv,
+                    showBackView: false, onCreditCardWidgetChange: (CreditCardBrand ) {  }, //true when you want to show cvv(back) view
                   ),
                   const SizedBox(
                     height: 40,
@@ -82,6 +64,12 @@ class ResPayment extends StatelessWidget {
                   TextFormBuilder(
                     hint: "Name",
                     controller: nameTEC,
+                    onChange: (k){
+                      setState(() {
+                        name = k!;
+                      });
+                    },
+
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Required";
@@ -95,7 +83,13 @@ class ResPayment extends StatelessWidget {
                   TextFormBuilder(
                     hint: "Card Number",
                     controller: cardTEC,
+                    maxLength: 16,
                     keyType: TextInputType.number,
+                    onChange: (k){
+                      setState(() {
+                        card = k!;
+                      });
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Required";
@@ -104,18 +98,52 @@ class ResPayment extends StatelessWidget {
                     },
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
-                  TextFormBuilder(
-                    hint: "Expired At",
-                    controller: dateTEC,
-                    keyType: TextInputType.datetime,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Required";
-                      }
-                      return null;
-                    },
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormBuilder(
+                          hint: "Expired At",
+                          controller: dateTEC,
+                          keyType: TextInputType.datetime,
+                          maxLength: 5,
+                          onChange: (k){
+                            setState(() {
+                              date = k!;
+                            });
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Required";
+                            }
+                            return null;
+                          },
+
+                        ),
+                      ),
+                      const SizedBox(width: 20,),
+
+                      Expanded(
+                        child: TextFormBuilder(
+                          hint: "CCV",
+                          controller: ccvTEC,
+                          maxLength: 3,
+                          keyType: TextInputType.number,
+                          onChange: (k){
+                            setState(() {
+                              ccv = k!;
+                            });
+                          },
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Required";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
