@@ -44,7 +44,7 @@ class ResInfo extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    imageHolder,
+                    packageInfo.image!=null ? packageInfo.image! :imageHolder,
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,

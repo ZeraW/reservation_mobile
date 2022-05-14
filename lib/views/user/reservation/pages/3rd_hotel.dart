@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:reservation_mobile/constants/constants.dart';
 import 'package:reservation_mobile/models/city.dart';
 import 'package:reservation_mobile/models/country.dart';
 import 'package:reservation_mobile/models/hotel.dart';
@@ -38,7 +39,7 @@ class ResHotel extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            'https://firebasestorage.googleapis.com/v0/b/reservation-7f6b8.appspot.com/o/holder.jpg?alt=media&token=a87e51f9-ab72-4e69-9112-b54c7bc7da6a',
+                            hotel.image!=null ? hotel.image! :imageHolder,
                             width: double.infinity,
                             height: 130,
                             fit: BoxFit.cover,
