@@ -52,7 +52,7 @@ class Package {
       {required List<Package> list, required String id}) {
     return list
         .firstWhere((element) => element.id == id,
-        orElse: () => Package(id: 'null'));
+        orElse: () => Package(id: 'null',keyWords: {'name':'Removed'}));
   }
 
 }

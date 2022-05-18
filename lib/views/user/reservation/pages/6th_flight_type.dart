@@ -24,55 +24,100 @@ class ResFlightType extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        flex: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '${item.name}',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 17),
-                            ),
-                            const SizedBox(height: 5,),
-                            Text(
-                              'Price : ${item.price} L.E',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w400, fontSize: 15),
-                            ),
-                          ],
-                        ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${item.name}',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ),
+                          const SizedBox(height: 5,),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Depart at: ${DateTime.fromMillisecondsSinceEpoch(provider.reservation.departAt!).day}-'
+                                      '${DateTime.fromMillisecondsSinceEpoch(provider.reservation.departAt!).month}-'
+                                      '${DateTime.fromMillisecondsSinceEpoch(provider.reservation.departAt!).year} ',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400, fontSize: 14),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Return at: ${DateTime.fromMillisecondsSinceEpoch(provider.reservation.returnAt!).day}-'
+                                      '${DateTime.fromMillisecondsSinceEpoch(provider.reservation.returnAt!).month}-'
+                                      '${DateTime.fromMillisecondsSinceEpoch(provider.reservation.returnAt!).year} ',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400, fontSize: 14),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5,),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Depart time: '
+                                      '${DateTime.fromMillisecondsSinceEpoch(provider.reservation.departAt!).hour}'
+                                      ':${DateTime.fromMillisecondsSinceEpoch(provider.reservation.departAt!).minute}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400, fontSize: 14),
+                                ),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'Return time: '
+                                      '${DateTime.fromMillisecondsSinceEpoch(provider.reservation.returnAt!).hour}'
+                                      ':${DateTime.fromMillisecondsSinceEpoch(provider.reservation.returnAt!).minute}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w400, fontSize: 14),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5,),
+                          Text(
+                            'Price : ${item.price} L.E',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w500, fontSize: 15),
+                          ),
+                        ],
                       ),
                       const SizedBox(
-                        width: 8,
+                        height: 8,
                       ),
-                      SizedBox(
-                        height: 45,
-                        width: 100,
-                        child: ButtonWidget(
-                          Text(
-                            provider.reservation.flightTypeId != null &&
+                      Center(
+                        child: SizedBox(
+                          height: 45,
+                          width: 100,
+                          child: ButtonWidget(
+                            Text(
+                              provider.reservation.flightTypeId != null &&
+                                  provider.reservation.flightTypeId == item.id
+                                  ? 'SELECTED'
+                                  : 'SELECT',
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 14),
+                            ),
+                            isExpanded: true,
+                            color: provider.reservation.flightTypeId != null &&
                                 provider.reservation.flightTypeId == item.id
-                                ? 'SELECTED'
-                                : 'SELECT',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 14),
+                                ? Colors.black38
+                                : Colors.black,
+                            fun: () {
+                              if (provider.reservation.flightTypeId != null &&
+                                  provider.reservation.flightTypeId == item.id) {
+                              } else {
+                                provider.updateFlightType(item.id!,item.price!);
+                              }
+                            },
                           ),
-                          isExpanded: true,
-                          color: provider.reservation.flightTypeId != null &&
-                              provider.reservation.flightTypeId == item.id
-                              ? Colors.black38
-                              : Colors.black,
-                          fun: () {
-                            if (provider.reservation.flightTypeId != null &&
-                                provider.reservation.flightTypeId == item.id) {
-                            } else {
-                              provider.updateFlightType(item.id!,item.price!);
-                            }
-                          },
                         ),
                       ),
                     ],

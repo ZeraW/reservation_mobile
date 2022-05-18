@@ -19,12 +19,12 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
 
   int _currentIndex = 0;
-  String _pageName = 'Safrat';
+  String _pageName = 'Online tour & travel agency';
 
   @override
   Widget build(BuildContext context) {
     final List<Map<String, Widget>> _childrenUser = [
-      {'Safrat':const HomeScreen()},
+      {'Online tour & travel agency':const HomeScreen()},
       {'Search':const SearchScreen()},
       {'Booking':const BookingScreen(),},
       {'Account': const AccountScreen(),},

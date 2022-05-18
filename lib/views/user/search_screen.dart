@@ -41,6 +41,11 @@ class _SearchScreenState extends State<SearchScreen> {
     List<City>? listCity = context.watch<List<City>?>();
     List<PackageType>? listPackageType = context.watch<List<PackageType>?>();
 
+    listPackageType?.sort((a,b) => a.name!.compareTo(b.name!));
+
+    listCountry?.sort((a,b) => a.name!.compareTo(b.name!));
+
+
     return FormBuilder(
         key: formKey,
         child: Padding(

@@ -133,7 +133,18 @@ class ResInfo extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         for (int i=0;i<packageInfo.planList!.length;i++ )
-                          Text('day${i+1}: ${packageInfo.planList![i]} ',style: TextStyle(height: 1.5),),
+                          Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Day${i+1}:  ',style: const TextStyle(height: 1.5,fontWeight: FontWeight.bold),),
+                                  Expanded(child: Text('${packageInfo.planList![i]} ',style: const TextStyle(height: 1.5),)),
+                                ],
+                              ),
+                              i+1==packageInfo.planList!.length?  SizedBox(height: 8,):const Divider()
+                            ],
+                          )
 
                       ],
                     ),

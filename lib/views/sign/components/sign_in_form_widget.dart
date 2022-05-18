@@ -18,92 +18,107 @@ class SignInFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-      key: formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-             SizedBox(
-              height: Responsive.height(15, context),
-            ),
-            const Text(
-              'Welcome!',
-              style: TextStyle(
-                fontSize: fontSize25,
-                fontWeight: FontWeight.bold,
-                color: xColors.black,
-              ),
-            ),
-            const Text(
-              'Nice to see you again!',
-              style: TextStyle(
-                fontSize: fontSize17,
-                fontWeight: FontWeight.w500,
-                color: xColors.hintColor,
-              ),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            TextFormBuilder(
-              hint: "Email",
-              controller: emailTEC,
-              validator: (value) {
-                if (value!.isEmpty || !isEmail(value)) {
-                  return "Enter a valid email";
-                }
-                return null;
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextFormBuilder(
-              hint: "Password",
-              controller: passwordTEC,
-              isPassword: true,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return "Enter password";
-                }
-                return null;
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            ButtonWidget(
-              const Text('Login',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20),),
-              color: xColors.black,
-              isExpanded: true,
-              fun: () {
-                signIn();
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(children: [
-              const Text("Don't have account?  ",style: TextStyle(
-                fontSize: fontSize17,
-                fontWeight: FontWeight.w500,
-                color: xColors.hintColor,
-              ),),
-              GestureDetector(
-                onTap: (){
-                  context.read<AuthManage>().toggleWidgets(currentPage: 1);
-                },
-                child: const Text("Create account now",style:  TextStyle(
-                  fontSize: fontSize17,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.indigoAccent,
-                ),),
-              ),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: FormBuilder(
+            key: formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                 SizedBox(
+                  height: Responsive.height(10, context),
+                ),
 
-            ],)
-          ],
+                const Text(
+                  'Online tour & travel agency',
+                  style: TextStyle(
+                      color: xColors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 23),
+                ),
+                SizedBox(
+                  height: Responsive.height(2, context),
+                ),
+                const Text(
+                  'Welcome!',
+                  style: TextStyle(
+                    fontSize: fontSize25,
+                    fontWeight: FontWeight.bold,
+                    color: xColors.black,
+                  ),
+                ),
+                const Text(
+                  'Nice to see you again!',
+                  style: TextStyle(
+                    fontSize: fontSize17,
+                    fontWeight: FontWeight.w500,
+                    color: xColors.hintColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                TextFormBuilder(
+                  hint: "Email",
+                  controller: emailTEC,
+                  validator: (value) {
+                    if (value!.isEmpty || !isEmail(value)) {
+                      return "Enter a valid email";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextFormBuilder(
+                  hint: "Password",
+                  controller: passwordTEC,
+                  isPassword: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Enter password";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ButtonWidget(
+                  const Text('Login',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20),),
+                  color: xColors.black,
+                  isExpanded: true,
+                  fun: () {
+                    signIn();
+                  },
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(children: [
+                  const Text("Don't have account?  ",style: TextStyle(
+                    fontSize: fontSize17,
+                    fontWeight: FontWeight.w500,
+                    color: xColors.hintColor,
+                  ),),
+                  GestureDetector(
+                    onTap: (){
+                      context.read<AuthManage>().toggleWidgets(currentPage: 1);
+                    },
+                    child: const Text("Create account now",style:  TextStyle(
+                      fontSize: fontSize17,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.indigoAccent,
+                    ),),
+                  ),
+
+                ],)
+              ],
+            ),
+          ),
         ),
       ),
     );

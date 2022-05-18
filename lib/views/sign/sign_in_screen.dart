@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:reservation_mobile/utils/colors.dart';
+import 'package:reservation_mobile/utils/dimensions.dart';
 import 'components/sign_in_form_widget.dart';
 
 class SignInScreen extends StatelessWidget {

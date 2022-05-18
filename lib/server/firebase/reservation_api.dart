@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reservation_mobile/models/reservation.dart';
+import 'package:reservation_mobile/server/firebase/package_api.dart';
 import 'package:reservation_mobile/server/firebase/report_api.dart';
 
 
@@ -27,7 +28,14 @@ class ReservationApi {
 
   //delete existing data
   Future deleteData({required Reservation delete}) async {
-    return await reservationCollection.doc(delete.id.toString()).delete();
+    delete.canceled = true;
+    return await reservationCollection.doc(delete.id.toString())
+        .update(delete.toJson()).then((value)async{
+
+      PackageApi().packageCollection.doc(delete.packageId).update({
+        'remaining':FieldValue.increment(delete.capacity!)
+      });
+    });
   }
 
   // stream for live data

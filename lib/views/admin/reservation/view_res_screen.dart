@@ -4,6 +4,7 @@ import 'package:reservation_mobile/constants/constants.dart';
 import 'package:reservation_mobile/models/reservation.dart';
 import 'package:reservation_mobile/models/user.dart';
 import 'package:reservation_mobile/server/firebase/reservation_api.dart';
+import 'package:reservation_mobile/utils/colors.dart';
 
 class ViewReservationScreen extends StatefulWidget {
   static const routeName = 'view_reservation_screen';
@@ -44,19 +45,43 @@ class _ViewReservationScreenState extends State<ViewReservationScreen> {
                 ? ListView.builder(
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 5),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 5, horizontal: 5),
                         child: ListTile(
                           tileColor: Colors.grey[200],
                           title: Text('Id: ${list[index].id!}'),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(height: 8,),
-                              Text('User: ${UserModel().getUserName(list: usersList, id: list[index].userId!)}'),
-                              const SizedBox(height: 4,),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                  'User: ${UserModel().getUserName(list: usersList, id: list[index].userId!)}'),
+                              const SizedBox(
+                                height: 4,
+                              ),
                               Text('Capacity: ${list[index].capacity!}'),
                             ],
                           ),
+                          trailing: ElevatedButton(
+                              onPressed: () {
+                                if (list[index].canceled == false) {
+                                  ReservationApi()
+                                      .deleteData(delete: list[index]);
+                                }
+                              },
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      xColors.materialColor(
+                                          list[index].canceled == false? Colors.red : Colors.black
+
+                                      )
+
+                              ),
+                              child: Text(list[index].canceled == false
+                                  ? 'Cancel'
+                                  : 'Canceled')),
                         ),
                       );
                     },

@@ -35,6 +35,8 @@ class _BookingScreenState extends State<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Package>? pList = context.watch<List<Package>?>();
+
     return Padding(
         padding: const EdgeInsets.only(top: 30, right: 30, left: 30),
         child: Column(
@@ -108,6 +110,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               return show
                                   ? BookingCard(
                                       data: myData[index],
+                                      pList: pList,
                                     )
                                   : const SizedBox();
                             },
@@ -129,50 +132,84 @@ class BookingCard extends StatelessWidget {
   final Color cardColor = Colors.grey.withOpacity(0.50);
   final Color textColor = Colors.black.withOpacity(0.60);
   final Reservation data;
-
-  BookingCard({required this.data, Key? key}) : super(key: key);
+  List<Package>? pList;
+  BookingCard({required this.data,required this.pList, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Package? package = pList != null
+        ? Package().getPackage(list: pList!, id: data.packageId!)
+        : null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Container(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
-            decoration: BoxDecoration(
-                color: cardColor, borderRadius: BorderRadius.circular(8)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Start Date : ${DateTime.fromMillisecondsSinceEpoch(data.departAt!)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style:
+        Stack(
+          children: [
+            Container(
+              width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+                decoration: BoxDecoration(
+                    color: cardColor, borderRadius: BorderRadius.circular(8)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     Text(
+                      'Package : ${package!=null ? package.keyWords!['name']:''}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style:
                       TextStyle(color: textColor, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Start Date : ${DateTime.fromMillisecondsSinceEpoch(data.departAt!)}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(color: textColor, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Return Date : ${DateTime.fromMillisecondsSinceEpoch(data.returnAt!)}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(color: textColor, fontWeight: FontWeight.w500),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Booking no. : ${data.id}',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(color: textColor, fontWeight: FontWeight.w500),
+                    ),
+
+                  ],
+                )),
+            data.canceled!? Positioned(
+              top: 0,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                decoration: const BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ) // green shaped
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Return Date : ${DateTime.fromMillisecondsSinceEpoch(data.returnAt!)}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style:
-                      TextStyle(color: textColor, fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Booking no. : ${data.id}',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style:
-                      TextStyle(color: textColor, fontWeight: FontWeight.w500),
-                ),
-              ],
-            )),
+                child: const Text("Canceled",style: TextStyle(color: Colors.white),),
+              ),
+            ):const SizedBox()
+          ],
+        ),
         const SizedBox(
           height: 10,
         ),
