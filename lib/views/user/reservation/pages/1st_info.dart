@@ -27,7 +27,7 @@ class ResInfo extends StatelessWidget {
         ? PackageInfo().getPackageInfo(list: pInfoList, id: package.packetInfoId!) : null;
 
     return package != null &&
-        packageInfo != null &&
+        packageInfo != null && packageInfo.id!='null' &&
             countryList != null &&
             cityList != null
         ? SingleChildScrollView(child: Column(
@@ -69,11 +69,19 @@ class ResInfo extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Start Date: ${package.departAt}'),
+                        Text('Start Date: ${package.departAt?.year}-${package.departAt?.month}-${package.departAt?.day}'),
                         const SizedBox(
                           height: 5,
                         ),
-                        Text('End Date:  ${package.returnAt}'),
+                        Text('Start Time: ${package.departAt?.hour}:${package.departAt?.minute}'),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text('End Date: ${package.returnAt?.year}-${package.returnAt?.month}-${package.returnAt?.day}'),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text('End Time: ${package.returnAt?.hour}:${package.returnAt?.minute}'),
                         const SizedBox(
                           height: 5,
                         ),

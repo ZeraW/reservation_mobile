@@ -52,13 +52,14 @@ class _WrapperState extends State<Wrapper> {
           stream: UserApi().getCurrentUser,
           builder: (context, snapshot) {
             UserModel? model = snapshot.data;
-            if (model != null && model.userType == 'admin') {
+            if (model != null && model.userType == 'admin'||model?.userType =='manger') {
               return MultiProvider(providers: [
                 StreamProvider<List<Country>?>.value(
                     value: CountryApi().getLiveData, initialData: null,),
                 StreamProvider<List<ReportModel>?>.value(
                   value: ReportApi().getLiveReports, initialData: null,),
-
+                StreamProvider<UserModel?>.value(
+                  value: UserApi().getCurrentUser, initialData: null,),
                 StreamProvider<List<UserModel>?>.value(
                   value: UserApi().getLiveUsers, initialData: null,),
                 StreamProvider<List<City>?>.value(

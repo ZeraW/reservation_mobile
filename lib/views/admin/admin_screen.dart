@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:reservation_mobile/constants/constants.dart';
 import 'package:reservation_mobile/navigation_service.dart';
 import 'package:reservation_mobile/server/auth.dart';
@@ -8,6 +9,7 @@ import 'package:reservation_mobile/views/admin/package_type/view_package_type_sc
 import 'package:reservation_mobile/views/admin/reservation/view_res_package_screen.dart';
 import 'package:reservation_mobile/widgets/button/button_widget.dart';
 
+import '../../models/user.dart';
 import 'air_line/view_airline_screen.dart';
 import 'city/view_countries.dart';
 import 'country/view_country_screen.dart';
@@ -53,10 +55,11 @@ class AdminScreen extends StatelessWidget {
     );
   }
 
-  Widget getExpansionList(BuildContext context) {
+  Widget getExpansionList(BuildContext context,UserModel userModel) {
+    print('${userModel.userType}');
     return ListView(
       children: [
-        ExpansionTile(
+        userModel.userType == 'manger'?SizedBox(): ExpansionTile(
           title: const Text('Basic Data'),
           children: [
             getTitle(
@@ -95,7 +98,7 @@ class AdminScreen extends StatelessWidget {
             )
           ],
         ),
-        ExpansionTile(
+        userModel.userType == 'manger'?SizedBox():ExpansionTile(
           title: const Text('Hotel Data'),
           children: [
             getTitle(
@@ -114,7 +117,7 @@ class AdminScreen extends StatelessWidget {
             ),
           ],
         ),
-        ExpansionTile(
+        userModel.userType == 'manger'?SizedBox(): ExpansionTile(
           title: const Text('Airline Data'),
           children: [
             getTitle(
@@ -133,7 +136,7 @@ class AdminScreen extends StatelessWidget {
             ),
           ],
         ),
-        ExpansionTile(
+        userModel.userType == 'manger'?SizedBox():ExpansionTile(
           title: const Text('Reservation Data'),
           children: [
             getTitle(
@@ -145,7 +148,7 @@ class AdminScreen extends StatelessWidget {
             ),
           ],
         ),
-        ExpansionTile(
+        userModel.userType == 'manger'? ExpansionTile(
           title: const Text('Report'),
           children: [
             getTitle(
@@ -162,7 +165,7 @@ class AdminScreen extends StatelessWidget {
               },
             ),
           ],
-        ),
+        ):SizedBox(),
 
         const SizedBox(
           height: 20,
@@ -185,6 +188,8 @@ class AdminScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserModel? user = context.watch<UserModel?>();
+
     return Scaffold(
       backgroundColor: backgroundWhite,
       appBar: AppBar(
@@ -195,7 +200,7 @@ class AdminScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: getExpansionList(context),
+      body: user!=null?getExpansionList(context,user):SizedBox(),
     );
   }
 }

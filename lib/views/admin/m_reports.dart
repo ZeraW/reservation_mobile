@@ -19,7 +19,7 @@ class FinancialReportScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
+          centerTitle: false,
           elevation: 0.0,
           title: Text(
             'Financial Report',
@@ -33,7 +33,30 @@ class FinancialReportScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 20.0),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/image/Safrat2.png',
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'Financial report',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Responsive.width(5, context)),
+                      )
+                    ],
+                  ),
+                  const Divider(
+                    color: Colors.black,
+                    thickness: 2,
+                    height: 40,
+                  ),
+
                   Expanded(
                     child: SizedBox(
                       width: double.infinity,
@@ -50,6 +73,8 @@ class FinancialReportScreen extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
+
+
                           ProfitWidget(
                               title: 'Annual Gain',
                               profit: '${report[0].totalProfit!['price']}',
@@ -145,7 +170,7 @@ class ProfitWidget extends StatelessWidget {
               Text(
                 count,
                 style:
-                    const TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
+                    const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -188,65 +213,107 @@ class ManagementWidget extends StatelessWidget {
                 fontSize: Responsive.width(4.5, context)),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              const Text('1st : '),
-              Text(
-                first,
-                style:
-                    const TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                '  ( $firstCount )',
-                style:
-                    const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              const Text('2nd : '),
-              Text(
-                second,
-                style:
-                    const TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                '  ( $secondCount )',
-                style:
-                    const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
-              )
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 5,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              const Text('3rd : '),
-              Text(
-                third,
-                style:
-                    const TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                '  ( $thirdCount )',
-                style:
-                    const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
+        Table(
+          border: TableBorder.all(),
+          defaultColumnWidth: const IntrinsicColumnWidth(),
+          children: [
+            const TableRow(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(''),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'Package Name',
+                    style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    'No. of Reservation',
+                    style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
+            TableRow(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('1st : '),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    first,
+                    style:
+                        const TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '  ( $firstCount )',
+                    style:
+                        const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
+            TableRow(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('2nd : '),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    second,
+                    style:
+                        const TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '  ( $secondCount )',
+                    style:
+                        const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
+                  ),
+                )
+              ],
+            ),
+            TableRow(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('3rd : '),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    third,
+                    style:
+                        const TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '  ( $thirdCount )',
+                    style:
+                        const TextStyle(color: Colors.blue, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+          ],
         )
       ],
     );
@@ -291,7 +358,7 @@ class ManagementReportScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
+          centerTitle: false,
           elevation: 0.0,
           title: Text(
             'Management report',
@@ -305,7 +372,29 @@ class ManagementReportScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30.0),
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 20.0),
+                  Row(
+                    children: [
+                      Image.asset(
+                        'assets/image/Safrat2.png',
+                        width: 100,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Text(
+                        'Management report',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: Responsive.width(5, context)),
+                      )
+                    ],
+                  ),
+                  const Divider(
+                    color: Colors.black,
+                    thickness: 2,
+                    height: 40,
+                  ),
                   Expanded(
                     child: SizedBox(
                       width: double.infinity,

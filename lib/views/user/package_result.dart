@@ -51,57 +51,67 @@ class ResultList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsetsDirectional.only(start: 15, end: 15),
       child:  listCountry != null && listCity != null
-          ? ListView.builder(
+          ? Column(
+            children: [
+              Align(alignment: AlignmentDirectional.centerEnd,child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text('( ${pList.length} ) Package found'),
+              )),
+              Expanded(
+                child: ListView.builder(
         itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 7),
-            child: ListTile(
-              onTap: () {
-                NavigationService.userInstance.navigateToWidget(
-                    ChangeNotifierProvider(
-                        create: (context) => ReservationManage(
-                            Reservation(
-                                packagePrice: pList[index].keyWords!['price'],
-                                userId:FirebaseAuth.instance.currentUser?.uid,
-                                packageId: pList[index].id,
-                                canceled: false
-                            ),pList[index].keyWords!['country'],pList[index].keyWords!['city']),
-                        child: const ReservationScreen()));
-              },
-              title: Text('${pList[index].keyWords!['name']}'),
-              tileColor: Colors.black.withOpacity(0.03),
-              subtitle: Column(
-                children: [
-                  const SizedBox(
-                    height: 5,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  child: ListTile(
+                    onTap: () {
+                      NavigationService.userInstance.navigateToWidget(
+                          ChangeNotifierProvider(
+                              create: (context) => ReservationManage(
+                                  Reservation(
+                                      packagePrice: pList[index].keyWords!['price'],
+                                      userId:FirebaseAuth.instance.currentUser?.uid,
+                                      packageId: pList[index].id,
+                                      canceled: false
+                                  ),pList[index].keyWords!['country'],pList[index].keyWords!['city']),
+                              child: const ReservationScreen()));
+                    },
+                    title: Text('${pList[index].keyWords!['name']}'),
+                    tileColor: Colors.black.withOpacity(0.03),
+                    subtitle: Column(
+                      children: [
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                                '${Country().getCountryName(id: pList[index].keyWords!['country'], list: listCountry)} , '),
+                            Text(City().getCityName(
+                                id: pList[index].keyWords!['city'],
+                                list: listCity)),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                                '${pList[index].departAt!.day}-${pList[index].departAt!.month}-${pList[index].departAt!.year} , '),
+                            Text(
+                                '${pList[index].returnAt!.day}-${pList[index].returnAt!.month}-${pList[index].returnAt!.year}'),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                          '${Country().getCountryName(id: pList[index].keyWords!['country'], list: listCountry)} , '),
-                      Text(City().getCityName(
-                          id: pList[index].keyWords!['city'],
-                          list: listCity)),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                          '${pList[index].departAt!.day}-${pList[index].departAt!.month}-${pList[index].departAt!.year} , '),
-                      Text(
-                          '${pList[index].returnAt!.day}-${pList[index].returnAt!.month}-${pList[index].returnAt!.year}'),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          );
+                );
         },
         itemCount: pList.length,
-      )
+      ),
+              ),
+            ],
+          )
           : const SizedBox(),
     );
   }
