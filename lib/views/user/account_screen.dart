@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:provider/provider.dart';
 import 'package:reservation_mobile/models/user.dart';
 import 'package:reservation_mobile/server/auth.dart';
 import 'package:reservation_mobile/server/firebase/user_api.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/constants.dart';
 import '../../utils/colors.dart';
@@ -101,6 +104,24 @@ class _AccountScreenState extends State<AccountScreen> {
               isExpanded: true,
               fun: () {
                 updateInfo(user);
+              },
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+
+            ButtonWidget(
+              const Text('Contact Us',style: TextStyle(fontWeight: FontWeight.w600,fontSize: 20),),
+              color: xColors.greenColor,
+              isExpanded: true,
+              fun: () {
+                if (Platform.isAndroid) {
+                  // add the [https]
+                  launch("https://wa.me/+20 101 868 2241"); // new line
+                } else {
+                  // add the [https]
+                  launch("https://api.whatsapp.com/send?phone=+20 101 868 2241"); // new line
+                }
               },
             ),
             const SizedBox(

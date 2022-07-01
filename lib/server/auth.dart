@@ -30,7 +30,7 @@ class AuthService {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Fluttertoast.showToast(
-            msg: "No user found for that Email",
+            msg: "Email or Password is incorrect",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,
@@ -39,7 +39,7 @@ class AuthService {
             fontSize: 16.0);
       } else if (e.code == 'wrong-password') {
         Fluttertoast.showToast(
-            msg: "Wrong password provided for that user.",
+            msg: "Email or Password is incorrect",
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1,

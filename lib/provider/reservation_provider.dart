@@ -20,7 +20,7 @@ class ReservationManage extends ChangeNotifier {
   int pageState = 1;
   int maxCount = 0;
   int daysCount = 0;
-
+  int roomCount=0;
   String country;
   String city;
 
@@ -71,6 +71,7 @@ class ReservationManage extends ChangeNotifier {
   }
 
   void resetRooms() {
+    roomCount =0;
     reservation.roomsAndCount = {};
     reservation.hotelPrice = 0;
     notifyListeners();
@@ -96,8 +97,11 @@ class ReservationManage extends ChangeNotifier {
 
     //reset the old price
     reservation.hotelPrice = 0;
+
+    roomCount = 0;
     //loop inside the rooms map and get the new price
     for (int num in reservation.roomsAndCount!.values) {
+      roomCount = roomCount+num;
       reservation.hotelPrice = reservation.hotelPrice! + (num * price) ;
     }
     reservation.hotelPrice = reservation.hotelPrice! * daysCount;

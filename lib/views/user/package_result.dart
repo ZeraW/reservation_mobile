@@ -64,7 +64,7 @@ class ResultList extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 7),
                   child: ListTile(
                     onTap: () {
-                      NavigationService.userInstance.navigateToWidget(
+                      pList[index].remaining==0 ?null: NavigationService.userInstance.navigateToWidget(
                           ChangeNotifierProvider(
                               create: (context) => ReservationManage(
                                   Reservation(
@@ -77,6 +77,7 @@ class ResultList extends StatelessWidget {
                     },
                     title: Text('${pList[index].keyWords!['name']}'),
                     tileColor: Colors.black.withOpacity(0.03),
+                    trailing: pList[index].remaining==0 ?Text('Fully Booked'):SizedBox(),
                     subtitle: Column(
                       children: [
                         const SizedBox(
